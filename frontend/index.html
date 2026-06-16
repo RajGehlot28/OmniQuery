@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Notes Assistant</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="chat-container">
+      <div class="header">
+        <h1>📚 College Notes Assistant</h1>
+        <p>Ask questions from your uploaded study materials</p>
+      </div>
+
+      <div id="chatBox" class="chat-box">
+        <div class="welcome" id="welcomeSection">
+          <h2>🎓 Welcome</h2>
+          <p>
+            Your notes have already been indexed and stored in the knowledge base.
+          </p>
+          <p>
+            Ask any question and the assistant will search the notes and generate the most relevant answer.
+          </p>
+
+          <div class="examples">
+            <h3>Example Questions</h3>
+
+            <div class="example-card" data-question="What is computer network?">
+              What is Computer Network?
+            </div>
+
+            <div class="example-card" data-question="Explain operating system?">
+              Explain Operating System?
+            </div>
+
+            <div class="example-card" data-question="What is software engineering?">
+              What is Software Engineering?
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <input id="queryInput" type="text" placeholder="Ask anything from your notes..." autocomplete="off"/>
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
