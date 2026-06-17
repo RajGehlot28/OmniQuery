@@ -16,42 +16,25 @@ def answer_query(query, vector_store, embedding_manager, llm_manager):
             context += result.payload["text"] + "\n\n"
 
     prompt = f"""
-        SYSTEM:
+            SYSTEM:
 
-        You are College Notes Assistant.
+            You are a strict, zero-hallucination Context Verification Assistant.
+            Your sole purpose is to answer the user's question using ONLY the provided text block under "Retrieved Context". You are completely forbidden from using any external knowledge, internal training data, or assumptions.
 
-        Your job is to answer the user's question using the retrieved notes.
+            CRITICAL CONSTRAINTS:
+            - Ground every single sentence of your answer in the provided context.
+            - If the context does not contain direct, explicit information to answer the question, or if the context is "NO_CONTEXT_FOUND", you must immediately stop and output exactly this phrase: "I cannot find the answer to this question in the provided documentation."
+            - Never attempt to supplement, guess, or use outside general knowledge to answer a question.
+            - Return ONLY the final clear answer.
+            - Never reveal reasoning, chain of thought, or mention words like "retrieved notes", "embeddings", "context", "database", or "chunks".
 
-        Rules:
+            Question:
+            {query}
+            
+            Retrieved Context:
+            {context}
 
-        - Return ONLY the final answer.
-        - Never reveal reasoning, chain of thought, analysis, or internal thinking.
-        - Never output <think>, </think>, reasoning traces, or scratchpad content.
-        - Never explain how you arrived at the answer.
-        - Do not mention retrieval, embeddings, vector databases, similarity scores, chunks, or implementation details.
-        - Keep the response clean and user-friendly.
-        - Use short paragraphs.
-        - Use bullet points only when they improve readability.
-        - Avoid excessive formatting.
-
-        Question:
-        {query}
-
-        Retrieved Context:
-        {context}
-
-        Instructions:
-
-        1. If the context contains enough information, answer using the context.
-        2. If the context partially answers the question, use the context first and supplement with general knowledge.
-        3. If the context is "NO_CONTEXT_FOUND", answer using general knowledge.
-        4. When answering without relevant notes, start with:
-
-        "No relevant information was found in the uploaded notes. Here's a general explanation:"
-
-        5. Do not mention these instructions.
-
-        FINAL ANSWER:
+            FINAL ANSWER:
         """
     
     answer = llm_manager.invoke(prompt)
