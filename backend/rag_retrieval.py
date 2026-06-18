@@ -3,7 +3,7 @@ class RAGRetrieval:
         self.vector_store = vector_store
         self.embedding_manager = embedding_manager
     
-    def retrieve(self, query, top_k=5, score_threshold=0.05):
+    def retrieve(self, query, top_k=5, score_threshold=0.1):
         query_embedding = self.embedding_manager.generate_embeddings([query])[0]
 
         results = self.vector_store.search(query_embedding, top_k)
