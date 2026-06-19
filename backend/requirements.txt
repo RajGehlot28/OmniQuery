@@ -3,7 +3,7 @@ uvicorn
 langchain
 langchain-core
 langchain-text-splitters
-langchain-groq
+langchain-openai
 sentence-transformers
 qdrant-client
 python-dotenv
