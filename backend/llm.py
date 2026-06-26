@@ -16,5 +16,5 @@ class LLM:
         )
 
     async def invoke(self, prompt):
-        response = await self.llm.invoke(prompt)
+        response = await self.llm.ainvoke(prompt)
         return response.content
