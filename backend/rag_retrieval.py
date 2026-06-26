@@ -3,10 +3,10 @@ class RAGRetrieval:
         self.vector_store = vector_store
         self.embedding_manager = embedding_manager
     
-    def retrieve(self, query, top_k=5, score_threshold=0.1):
+    async def retrieve(self, query, top_k=5, score_threshold=0.1):
         query_embedding = self.embedding_manager.generate_embeddings([query])[0]
 
-        results = self.vector_store.search(query_embedding, top_k)
+        results = await self.vector_store.search(query_embedding, top_k)
 
         # considering results/points whose score >= score_threshold
         filtered_results = []

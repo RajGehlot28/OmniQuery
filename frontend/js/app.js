@@ -7,7 +7,7 @@ const exampleCards = document.querySelectorAll(".example-card");
 let loadingMessageElement = null;
 
 function hideWelcome() {
-  if (welcomeSection) {
+  if(welcomeSection) {
     welcomeSection.style.display = "none";
   }
 }
@@ -44,7 +44,7 @@ function removeLoading() {
 async function sendMessage() {
   const query = queryInput.value.trim();
 
-  if (!query) return;
+  if(!query) return;
 
   hideWelcome();
   addMessage("user", query);
@@ -69,7 +69,7 @@ async function sendMessage() {
 
     removeLoading();
     addMessage("bot", data.answer || "No answer received.");
-  } catch (error) {
+  } catch(error) {
     removeLoading();
     addMessage("bot", "Unable to connect to server.");
   }
@@ -78,7 +78,7 @@ async function sendMessage() {
 sendBtn.addEventListener("click", sendMessage);
 
 queryInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
+  if(event.key === "Enter") {
     sendMessage();
   }
 });

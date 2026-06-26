@@ -1,11 +1,11 @@
 from rag_retrieval import RAGRetrieval
 
-def answer_query(query, vector_store, embedding_manager, llm_manager):
+async def answer_query(query, vector_store, embedding_manager, llm_manager):
     # Retrieval Pipeline :-
 
     # step-1 creating vector embedding for query and retrieving relevant embeddings from vectorDB
     rag_retrieval = RAGRetrieval(vector_store, embedding_manager)
-    results = rag_retrieval.retrieve(query)
+    results = await rag_retrieval.retrieve(query)
 
     # sending (query + retrieved-documents) to LLM and ask to generate output
     context = ""
@@ -37,5 +37,5 @@ def answer_query(query, vector_store, embedding_manager, llm_manager):
             FINAL ANSWER:
         """
     
-    answer = llm_manager.invoke(prompt)
+    answer = await llm_manager.invoke(prompt)
     return answer
