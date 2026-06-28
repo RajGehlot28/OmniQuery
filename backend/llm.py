@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 class LLM:
@@ -16,5 +15,5 @@ class LLM:
         )
 
     async def invoke(self, prompt):
-        response = await self.llm.ainvoke(prompt)
+        response = await self.llm.ainvoke(prompt) # asynchronous invoke method call
         return response.content
