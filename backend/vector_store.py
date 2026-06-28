@@ -43,16 +43,18 @@ class VectorStore:
                     "text":chunk.page_content,
                     "source":chunk.metadata["source"],
                     "page":chunk.metadata["page"],
-                    "chunk_id" : idx
+                    "chunk_id" : idx,
+                    "type" : chunk.metadata["type"]
                 }
             )
             points.append(point)
         
-        # adding points to qdrant-db
-        await self.client.upsert(
-            collection_name=self.collection_name,
-            points = points
-        )
+        # storing points to qdrant-db in batches
+        for i in range(0, len(points), 200):
+            await self.client.upsert(
+                collection_name=self.collection_name,
+                points=points[i:i+200]
+            )
 
     async def search(self, query_embedding, top_k=5):
         results = await self.client.query_points(
