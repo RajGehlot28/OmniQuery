@@ -2,8 +2,9 @@ from pdf_to_doc import PdfToDoc
 from chunk_manager import ChunkManager
 from embedding_manager import EmbeddingManager
 from vector_store import VectorStore
+import asyncio
 
-def store_vectorDB():
+async def store_vectorDB():
     # Ingestion Pipeline :-
 
     print("Starting Ingestion...")
@@ -23,8 +24,9 @@ def store_vectorDB():
 
     # step-4 store embeddings into vectorDB (Qdrant DB)
     vector_store = VectorStore()
-    vector_store.add_documents(chunks, embeddings)
+    await vector_store.add_documents(chunks, embeddings)
 
     print("Ingestion completed")
-
-store_vectorDB()
+    
+if __name__ == "__main__":
+    asyncio.run(store_vectorDB())

@@ -13,25 +13,25 @@ from qdrant_client.models import (VectorParams, Distance, PointStruct)
 class VectorStore:
     def __init__(self, collection_name="college_notes", vector_size=384):
         self.collection_name = collection_name
+        self.vector_size = vector_size
         self.client = AsyncQdrantClient(
             url = QDRANT_URL,
             api_key = QDRANT_API_KEY
         )
 
-
-        async def is_collection_exists(self):
-            # We use 'await' here because the method is asynchronous
-            collections_response = await self.client.get_collections()
-            collections = collections_response.collections
-            
-            if self.collection_name not in [coll.name for coll in collections]:
-                await self.client.create_collection(
-                    collection_name = self.collection_name,
-                    vectors_config = VectorParams(
-                        size = self.vector_size,
-                        distance = Distance.COSINE
-                    )
+    async def is_collection_exists(self):
+        # We used 'await' here because the method is asynchronous
+        collections_response = await self.client.get_collections()
+        collections = collections_response.collections
+        
+        if self.collection_name not in [coll.name for coll in collections]:
+            await self.client.create_collection(
+                collection_name = self.collection_name,
+                vectors_config = VectorParams(
+                    size = self.vector_size,
+                    distance = Distance.COSINE
                 )
+            )
 
     async def add_documents(self, chunks, embeddings):
         await self.is_collection_exists()
