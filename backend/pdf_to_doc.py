@@ -36,7 +36,7 @@ class PdfToDoc:
         pages_per_sec = num_pages / execution_time if execution_time > 0 else 0
 
         print("-" * 30)
-        print("📄 PDF PARSING METRICS")
+        print("PDF PARSING METRICS")
         print(f"Total Pages Parsed : {num_pages}")
         print(f"Execution Time     : {execution_time:.4f} seconds")
         print(f"Throughput         : {pages_per_sec:.2f} pages/second")

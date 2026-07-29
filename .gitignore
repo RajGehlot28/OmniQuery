@@ -7,7 +7,7 @@ __pycache__/
 
 .env
 
-pdfs/
+InputData/
 vector_store/
 qdrant_storage/
 

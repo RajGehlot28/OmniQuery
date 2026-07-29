@@ -22,7 +22,7 @@ class ChunkManager:
         chunks_per_sec = total_chunks / execution_time if execution_time > 0 else 0
 
         print("-" * 30)
-        print("🧩 CHUNKING METRICS")
+        print("CHUNKING METRICS")
         print(f"Total Chunks Created : {total_chunks}")
         print(f"Execution Time       : {execution_time:.4f} seconds")
         print(f"Throughput           : {chunks_per_sec:.2f} chunks/second")
