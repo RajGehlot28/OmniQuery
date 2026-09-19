@@ -20,7 +20,7 @@ class VectorStore:
         )
 
     async def is_collection_exists(self):
-        # We used 'await' here because the method is asynchronous
+        # We used await here because the method is asynchronous
         collections_response = await self.client.get_collections()
         collections = collections_response.collections
         

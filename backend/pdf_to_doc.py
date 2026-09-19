@@ -43,7 +43,6 @@ class PdfToDoc:
         print("-" * 30)
         
         print("total pdf's", pdf_count)
-        print("total pages:", len(self.documents))
 
     def get_documents(self):
         return self.documents
