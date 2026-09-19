@@ -6,8 +6,6 @@ class Reranker:
         self.model = CrossEncoder(model_name)
 
     def rerank(self, query, results, top_n=3):
-        if not results:
-            return results
 
         # create (query, chunk_text) pairs for the cross-encoder
         pairs = [(query, result.payload["text"]) for result in results]

@@ -49,11 +49,15 @@ class VectorStore:
             )
             points.append(point)
         
-        # adding points to qdrant-db
-        await self.client.upsert(
-            collection_name=self.collection_name,
-            points = points
-        )
+        # uploading in batches to avoid timeout on large datasets
+        batch_size = 100
+        for i in range(0, len(points), batch_size):
+            batch = points[i : i + batch_size]
+            await self.client.upsert(
+                collection_name=self.collection_name,
+                points=batch
+            )
+            print(f"Uploaded {min(i + batch_size, len(points))}/{len(points)} points...")
 
     async def search(self, query_embedding, top_k=5):
         results = await self.client.query_points(
