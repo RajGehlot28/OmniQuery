@@ -26,5 +26,8 @@ class QueryRequest(BaseModel):
 
 @app.post("/ask")
 async def ask(request: QueryRequest):
-    answer = await answer_query(request.query, vector_store, embedding_manager, llm_manager)
-    return {"answer" : answer}
+    answer, source = await answer_query(request.query, vector_store, embedding_manager, llm_manager)
+    return {
+        "answer": answer,
+        "source": source
+    }

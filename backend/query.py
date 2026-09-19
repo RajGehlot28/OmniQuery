@@ -1,19 +1,12 @@
-from rag_retrieval import RAGRetrieval
+from crag_retrieval import CRAGRetrieval
 
 async def answer_query(query, vector_store, embedding_manager, llm_manager):
-    # Retrieval Pipeline :-
+    # Retrieval using CRAG
+    crag = CRAGRetrieval(vector_store, embedding_manager, llm_manager)
+    context, source = await crag.retrieve(query)
 
-    # step-1 creating vector embedding for query and retrieving relevant embeddings from vectorDB
-    rag_retrieval = RAGRetrieval(vector_store, embedding_manager)
-    results = await rag_retrieval.retrieve(query)
-
-    # sending (query + retrieved-documents) to LLM and ask to generate output
-    context = ""
-    if len(results) == 0:
-        context = "NO_CONTEXT_FOUND"
-    else:
-        for result in results:
-            context += result.payload["text"] + "\n\n"
+    if not context:
+        return "I cannot find the answer to this question in the provided documents.", "none"
 
     prompt = f"""
             SYSTEM:
@@ -22,9 +15,10 @@ async def answer_query(query, vector_store, embedding_manager, llm_manager):
             Your purpose is to answer the user's question using ONLY the provided text block under "Retrieved Context". You are completely forbidden from using any external knowledge, internal training data, or assumptions.
 
             CRITICAL CONSTRAINTS:
-            - Ground every single sentence of your answer in the provided context.
-            - If the context does not contain direct, explicit information to answer the question, or if the context is "NO_CONTEXT_FOUND", you must immediately stop and output exactly this phrase: "I cannot find the answer to this question in the provided documents."
-            - Never attempt to supplement, guess, or use outside general knowledge to answer a question.
+            - Ground every single sentence of your answer strictly in the provided context.
+            - If the context contains no relevant information at all, or if the context is "NO_CONTEXT_FOUND", output: "I cannot find the answer to this question in the provided documents."
+            - If the question contains multiple parts and only some parts are covered in the context, answer the covered parts directly from the context.
+            - Never attempt to guess, hallucinate, or use outside general knowledge.
             - Return ONLY the final clear answer.
             - Never reveal reasoning, chain of thought, or mention words like "retrieved notes", "embeddings", "context", "database", or "chunks".
 
@@ -36,6 +30,6 @@ async def answer_query(query, vector_store, embedding_manager, llm_manager):
 
             FINAL ANSWER:
         """
-    
+
     answer = await llm_manager.invoke(prompt)
-    return answer
+    return answer, source

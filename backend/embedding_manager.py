@@ -7,6 +7,5 @@ class EmbeddingManager:
 
     def generate_embeddings(self, texts):
         # texts/string converts to embedding, so it takes argument as text/list of texts
-        embeddings = self.model.encode(texts, show_progress_bar=True)
-        print("embedding shape:", embeddings.shape) # output = (number of chunks, dimension)
+        embeddings = self.model.encode(texts, show_progress_bar=False)
         return embeddings

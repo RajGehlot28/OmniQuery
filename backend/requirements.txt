@@ -9,3 +9,5 @@ qdrant-client
 python-dotenv
 pymupdf
 pydantic
+duckduckgo-search
+ddgs

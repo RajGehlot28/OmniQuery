@@ -131,8 +131,48 @@ body {
 .loading {
   background: white;
   color: #475569;
-  border: 1px dashed #cbd5e1;
+  border: 1px solid #cbd5e1;
   font-style: italic;
+}
+
+.message-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.source-tag {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.source-vector {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.source-web {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.source-combined {
+  background: #faf5ff;
+  color: #6b21a8;
+  border: 1px solid #e9d5ff;
+}
+
+.source-info {
+  opacity: 0.85;
+  font-size: 0.76rem;
 }
 
 .input-container {

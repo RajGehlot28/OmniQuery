@@ -16,11 +16,34 @@ function scrollToBottom() {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function addMessage(sender, text) {
+function addMessage(sender, text, source = null) {
   const messageDiv = document.createElement("div");
   messageDiv.classList.add("message", sender);
 
-  messageDiv.textContent = text;
+  const textDiv = document.createElement("div");
+  textDiv.classList.add("message-text");
+  textDiv.textContent = text;
+  messageDiv.appendChild(textDiv);
+
+  if (sender === "bot" && source && source !== "none") {
+    const sourceDiv = document.createElement("div");
+    sourceDiv.classList.add("source-tag");
+
+    if (source === "vector_db") {
+      sourceDiv.classList.add("source-vector");
+      sourceDiv.innerHTML = `Source: <strong>Vector DB</strong> <span class="source-info">(Indexed study notes)</span>`;
+    } else if (source === "web_search") {
+      sourceDiv.classList.add("source-web");
+      sourceDiv.innerHTML = `Source: <strong>Web Search</strong> <span class="source-info">(Live web search)</span>`;
+    } else if (source === "combined") {
+      sourceDiv.classList.add("source-combined");
+      sourceDiv.innerHTML = `Source: <strong>Combined</strong> <span class="source-info">(Notes + Web search)</span>`;
+    }
+
+    if (sourceDiv.innerHTML) {
+      messageDiv.appendChild(sourceDiv);
+    }
+  }
 
   chatBox.appendChild(messageDiv);
   scrollToBottom();
@@ -68,7 +91,7 @@ async function sendMessage() {
     const data = await response.json();
 
     removeLoading();
-    addMessage("bot", data.answer || "No answer received.");
+    addMessage("bot", data.answer || "No answer received.", data.source);
   } catch(error) {
     removeLoading();
     addMessage("bot", "Unable to connect to server.");
