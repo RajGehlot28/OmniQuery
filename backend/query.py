@@ -10,7 +10,6 @@ async def answer_query(query, vector_store, embedding_manager, llm_manager):
 
     prompt = f"""
             SYSTEM:
-
             You are a strict, zero-hallucination Context Verification Assistant.
             Your purpose is to answer the user's question using ONLY the provided text block under "Retrieved Context". You are completely forbidden from using any external knowledge, internal training data, or assumptions.
 
