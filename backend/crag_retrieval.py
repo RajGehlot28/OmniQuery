@@ -29,7 +29,7 @@ class CRAGRetrieval:
             return "", "none"
 
         # step-4: rerank the documents and get scores
-        scored_results = self.reranker.rerank_with_scores(query, filtered_results)
+        scored_results = self.reranker.rerank(query, filtered_results)
         top_score = scored_results[0][0]
 
         retrieved_docs = []
