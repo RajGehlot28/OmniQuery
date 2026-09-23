@@ -38,6 +38,12 @@ function addMessage(sender, text, source = null) {
     } else if (source === "combined") {
       sourceDiv.classList.add("source-combined");
       sourceDiv.innerHTML = `Source: <strong>Combined</strong> <span class="source-info">(Notes + Web search)</span>`;
+    } else if (source.includes("database")) {
+      sourceDiv.classList.add("source-vector");
+      sourceDiv.innerHTML = `Source: <strong>${source.toUpperCase()}</strong>`;
+    } else {
+      sourceDiv.classList.add("source-vector");
+      sourceDiv.innerHTML = `Source: <strong>${source}</strong>`;
     }
 
     if (sourceDiv.innerHTML) {
