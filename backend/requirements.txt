@@ -11,3 +11,7 @@ pymupdf
 pydantic
 duckduckgo-search
 ddgs
+sqlalchemy
+psycopg2-binary
+pymysql
+pymongo
